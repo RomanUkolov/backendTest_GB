@@ -22,4 +22,20 @@ public class Cuisine extends AbstractTest{
                 .body(containsString("cuisine"));
     }
 
+    @Test
+    void sendTitle() {
+        given()
+                .queryParam("apiKey", getApiKey())
+                .contentType("application/x-www-form-urlencoded")
+                .formParam("title", "Corned Beef And Cabbage With Irish Mustard Sauce")
+                .formParam("language", "en")
+                .when()
+                .post(getBaseUrl() + "recipes/cuisine")
+                .then()
+                .assertThat()
+                .statusCode(200)
+                .header("Content-Type", "application/json")
+                .body("cuisine", equalTo("European"));
+    }
+
 }
