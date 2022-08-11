@@ -1,7 +1,6 @@
 package Lesson3;
 
 import io.restassured.path.json.JsonPath;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -53,7 +52,7 @@ public class ComplexSearch extends AbstractTest {
     void showRecipeNutrition() {
         given()
                 .queryParam("apiKey", getApiKey())
-                .queryParam("minProtein", "10")
+                .queryParam("addRecipeNutrition", "true")
                 .when()
                 .get(getBaseUrl() + "recipes/complexSearch")
                 .then()
@@ -67,7 +66,7 @@ public class ComplexSearch extends AbstractTest {
     void showIngridients() {
         given()
                 .queryParam("apiKey", getApiKey())
-                .queryParam("minProtein", "10")
+                .queryParam("fillIngredients", "true")
                 .when()
                 .get(getBaseUrl() + "recipes/complexSearch")
                 .then()
