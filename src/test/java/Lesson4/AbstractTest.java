@@ -21,6 +21,7 @@ public class AbstractTest {
     private static String apiKey;
     private static String baseUrl;
     private static String hash;
+    private static String id;
     protected static ResponseSpecification responseSpecification;
     protected static RequestSpecification requestSpecification;
 
@@ -33,6 +34,7 @@ public class AbstractTest {
         apiKey =  prop.getProperty("apiKey");
         baseUrl = prop.getProperty("base_url");
         hash = prop.getProperty("hash");
+
 
         responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(200)
@@ -62,6 +64,8 @@ public class AbstractTest {
     public static String getHash() {
         return hash;
     }
+
+
 
     public RequestSpecification getRequestSpecification(){
         return requestSpecification;

@@ -12,7 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ShoppingListTest extends AbstractTest {
     private  final String USER_NAME = "test262";
-    String id;
 
     @Test
     void addItemToShoppingList() {
@@ -30,32 +29,37 @@ public class ShoppingListTest extends AbstractTest {
         assertThat(response.getName(), containsString("sesame flank steak salad"));
         assertThat(response.getAisle(),containsString("Salad"));
 
-        id = String.valueOf(response.getId());
     }
 
     @Test
     void getItemFromShoppingList() {
-        Item response = given()
+         given()
                 .spec(getRequestSpecification())
                 .when()
-                .get(getBaseUrl() +"mealplanner/" + USER_NAME + "/shopping-list")
+                .get(getBaseUrl() +"mealplanner/" + USER_NAME + "/shopping-list").prettyPeek()
                 .then()
-                .spec(responseSpecification)
-                .extract()
-                .response()
-                .body()
-                .as(Item.class);
-        assertThat(response.getName(), containsString("sesame flank steak salad"));
-        assertThat(response.getAisle(), containsString("Salad"));
-
+                .spec(responseSpecification);
     }
 
     @Test
     void deleteItem() {
-        given().spec(getRequestSpecification())
-                .pathParams("id", id)
+
+        Response response = given()
+                .spec(getRequestSpecification())
                 .when()
-                .delete(getBaseUrl() + "mealplanner/" + USER_NAME+ "/shopping-list/items/{id}")
+                .body(new AddToShoppingListRequest("tomato", "Salad", true))
+                .post(getBaseUrl() +"mealplanner/" + USER_NAME + "/shopping-list/items").prettyPeek()
+                .then()
+                .extract()
+                .response()
+                .body()
+                .as(Response.class);
+        int id = response.getId();
+
+        given()
+                .queryParam("hash", getHash())
+                .when()
+                .delete(getBaseUrl() + "mealplanner/" + USER_NAME+ "/shopping-list/items/" + id)
                 .then()
                 .statusCode(200);
     }
