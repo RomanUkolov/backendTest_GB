@@ -1,5 +1,7 @@
 package Lesson4;
 
+import Lesson4.GetResp.GetResponse;
+import Lesson4.GetResp.Item;
 import Lesson4.PostResp.AddToShoppingListRequest;
 import Lesson4.PostResp.Response;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,7 @@ public class ShoppingListTest extends AbstractTest {
                 .spec(getRequestSpecification())
                 .when()
                 .body(new AddToShoppingListRequest("Sesame Flank Steak Salad", "Salad", true))
-                .post(getBaseUrl() +"mealplanner/" + USER_NAME + "/shopping-list/items")
+                .post(getBaseUrl() +"mealplanner/" + USER_NAME + "/shopping-list/items").prettyPeek()
                 .then()
                 .extract()
                 .response()
@@ -31,6 +33,18 @@ public class ShoppingListTest extends AbstractTest {
 
     @Test
     void getItemFromShoppingList() {
+        Item response = given()
+                .spec(getRequestSpecification())
+                .when()
+                .get(getBaseUrl() +"mealplanner/" + USER_NAME + "/shopping-list")
+                .then()
+                .spec(responseSpecification)
+                .extract()
+                .response()
+                .body()
+                .as(Item.class);
+        assertThat(response.getName(), containsString("sesame flank steak salad"));
+        assertThat(response.getAisle(), containsString("Salad"));
 
     }
 }
