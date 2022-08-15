@@ -1,6 +1,5 @@
 package Lesson4;
 
-import Lesson4.GetResp.GetResponse;
 import Lesson4.GetResp.Item;
 import Lesson4.PostResp.AddToShoppingListRequest;
 import Lesson4.PostResp.Response;
@@ -13,6 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ShoppingListTest extends AbstractTest {
     private  final String USER_NAME = "test262";
+    String id;
 
     @Test
     void addItemToShoppingList() {
@@ -29,6 +29,8 @@ public class ShoppingListTest extends AbstractTest {
                 .as(Response.class);
         assertThat(response.getName(), containsString("sesame flank steak salad"));
         assertThat(response.getAisle(),containsString("Salad"));
+
+        id = String.valueOf(response.getId());
     }
 
     @Test
@@ -46,5 +48,15 @@ public class ShoppingListTest extends AbstractTest {
         assertThat(response.getName(), containsString("sesame flank steak salad"));
         assertThat(response.getAisle(), containsString("Salad"));
 
+    }
+
+    @Test
+    void deleteItem() {
+        given().spec(getRequestSpecification())
+                .pathParams("id", id)
+                .when()
+                .delete(getBaseUrl() + "mealplanner/" + USER_NAME+ "/shopping-list/items/{id}")
+                .then()
+                .statusCode(200);
     }
 }
