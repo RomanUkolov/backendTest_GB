@@ -46,7 +46,7 @@ public class AbstractTest {
                 .build();
 
         RestAssured.responseSpecification = responseSpecification;
-        RestAssured.requestSpecification = requestSpecification
+        RestAssured.requestSpecification = requestSpecification;
     }
 
     public static String getApiKey() {
