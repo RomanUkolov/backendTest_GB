@@ -1,5 +1,7 @@
 package Lesson4;
 
+import Lesson4.PostResp.AddToShoppingListRequest;
+import Lesson4.PostResp.Response;
 import org.junit.jupiter.api.Test;
 
 
@@ -24,8 +26,11 @@ public class ShoppingListTest extends AbstractTest {
                 .body()
                 .as(Response.class);
         assertThat(response.getName(), containsString("sesame flank steak salad"));
+        assertThat(response.getAisle(),containsString("Salad"));
+    }
 
-
+    @Test
+    void getItemFromShoppingList() {
 
     }
 }

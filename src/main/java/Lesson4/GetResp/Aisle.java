@@ -1,5 +1,7 @@
-package Lesson4;
+package Lesson4.GetResp;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
@@ -11,37 +13,37 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "amount",
-        "unit"
+        "aisle",
+        "items"
 })
-@Generated("jsonschema2pojo")
-public class Metric {
 
-    @JsonProperty("amount")
-    private Double amount;
-    @JsonProperty("unit")
-    private String unit;
+public class Aisle {
+
+    @JsonProperty("aisle")
+    private String aisle;
+    @JsonProperty("items")
+    private List<Item> items = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("amount")
-    public Double getAmount() {
-        return amount;
+    @JsonProperty("aisle")
+    public String getAisle() {
+        return aisle;
     }
 
-    @JsonProperty("amount")
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    @JsonProperty("aisle")
+    public void setAisle(String aisle) {
+        this.aisle = aisle;
     }
 
-    @JsonProperty("unit")
-    public String getUnit() {
-        return unit;
+    @JsonProperty("items")
+    public List<Item> getItems() {
+        return items;
     }
 
-    @JsonProperty("unit")
-    public void setUnit(String unit) {
-        this.unit = unit;
+    @JsonProperty("items")
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @JsonAnyGetter
