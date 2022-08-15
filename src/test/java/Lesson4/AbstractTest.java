@@ -3,6 +3,7 @@ package Lesson4;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -43,6 +44,7 @@ public class AbstractTest {
                 .addQueryParam("apiKey", apiKey)
                 .addQueryParam("hash",hash )
                 .setContentType(ContentType.JSON)
+                .log(LogDetail.ALL)
                 .build();
 
         RestAssured.responseSpecification = responseSpecification;

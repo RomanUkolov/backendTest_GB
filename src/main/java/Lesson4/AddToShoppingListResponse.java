@@ -31,8 +31,8 @@ public class AddToShoppingListResponse {
     }
 
     @JsonProperty("items")
-    public List<Item> getItems() {
-        return items;
+    public String getItems() {
+        return String.valueOf(items);
     }
 
     @JsonProperty("items")
