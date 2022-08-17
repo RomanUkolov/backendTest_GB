@@ -20,6 +20,7 @@ public class ProductTest {
     Product product = null;
     Faker faker = new Faker();
     int id;
+    String title;
 
     @BeforeAll
     static void beforeAll() {
@@ -36,7 +37,7 @@ public class ProductTest {
         product = new Product()
                 .withTitle(faker.food().ingredient())
                 .withCategoryTitle("Food")
-                .withPrice((int) (Math.random() * 10000));
+                .withPrice((int) (Math.random() * 1000));
     }
 
     @Test
@@ -44,8 +45,20 @@ public class ProductTest {
         Response<Product> response = productService.createProduct(product)
                 .execute();
         id =  response.body().getId();
+        title = response.body().getTitle();
+
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
     }
+
+    @Test
+    void modifyCreatedProductTest() throws IOException {
+        Response<Product> response = productService.modifyProduct(product)
+                .execute();
+
+    }
+
+    @Test
+
 
 
 
