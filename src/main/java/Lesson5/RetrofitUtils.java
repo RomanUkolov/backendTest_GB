@@ -21,7 +21,7 @@ public class RetrofitUtils {
 
     static {
         try {
-            configFile = new FileInputStream("src/main/resources/my.properties");
+            configFile = new FileInputStream("src/main/resources/var.properties");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

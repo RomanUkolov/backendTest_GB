@@ -30,7 +30,7 @@ public class GetCategoryTest {
         }
 
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
-        assertThat(response.body().getId(), equalTo(2));
+        assertThat(response.body().getId(), equalTo(1));
         assertThat(response.body().getTitle(), equalTo("Food"));
 
 
