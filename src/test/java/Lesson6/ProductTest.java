@@ -77,46 +77,4 @@ public class ProductTest {
 
         Assertions.assertEquals(title, selected.getTitle());
     }
-
-
-    @DisplayName("Modify product - PUT")
-    @Test
-    void modifyCreatedProductTest() throws IOException {
-        Response<Product> response = productService.createProduct(product)
-                .execute();
-        id = response.body().getId();
-        category = response.body().getCategoryTitle();
-        assertThat(response.isSuccessful(), CoreMatchers.is(true));
-
-        productNew = new Product()
-                .withId(id)
-                .withTitle(faker.food().ingredient())
-                .withCategoryTitle(category)
-                .withPrice((int) (Math.random() * 1000));
-
-
-        Response<Product> modifyResponce = productService.modifyProduct(productNew)
-                .execute();
-        assertThat(modifyResponce.isSuccessful(), CoreMatchers.is(true));
-        assertThat(modifyResponce.body().getId(), equalTo(id));
-        assertThat(modifyResponce.body().getCategoryTitle(), equalTo(category));
-
-    }
-
-    @DisplayName("Returns a specific product by their identifier - GET")
-    @Test
-    void getProductById() throws IOException {
-        Response<Product> response = productService.createProduct(product)
-                .execute();
-        id = response.body().getId();
-        assertThat(response.isSuccessful(), CoreMatchers.is(true));
-
-
-        Response<Product> getIdResponce = productService.getProductById(id)
-                .execute();
-        assertThat(getIdResponce.isSuccessful(), CoreMatchers.is(true));
-        assertThat(getIdResponce.body().getId(), equalTo(id));
-        assertThat(getIdResponce.body().getCategoryTitle(), equalTo("Food"));
-
-    }
 }
