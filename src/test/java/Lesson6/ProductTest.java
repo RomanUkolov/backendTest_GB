@@ -1,15 +1,21 @@
 package Lesson6;
 
 import Lesson5.RetrofitUtils;
+import Lesson6.db.model.Products;
 import com.github.javafaker.Faker;
 import Lesson5.api.ProductService;
 import Lesson5.dto.Product;
 import okhttp3.ResponseBody;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.*;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
@@ -23,16 +29,20 @@ public class ProductTest {
     Faker faker = new Faker();
     int id;
     String category;
+    String title;
 
 
     @BeforeAll
-    static void beforeAll() {
-        try {
+    static void beforeAll() throws IOException {
             productService = RetrofitUtils.getRetrofit()
                     .create(ProductService.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+
+
+
+
+        Lesson6.db.model.CategoriesExample example = new Lesson6.db.model.CategoriesExample();
+
     }
 
     @BeforeEach
@@ -51,8 +61,21 @@ public class ProductTest {
         Response<Product> response = productService.createProduct(product)
                 .execute();
         id = response.body().getId();
+        title = response.body().getTitle();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
         assertThat(response.body().getCategoryTitle(), equalTo("Food"));
+
+        SqlSession session = null;
+        String resource = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new
+                SqlSessionFactoryBuilder().build(inputStream);
+        session = sqlSessionFactory.openSession();
+        Lesson6.db.dao.ProductsMapper productsMapper = session.getMapper(Lesson6.db.dao.ProductsMapper.class);
+
+        Lesson6.db.model.Products selected = (Products) productsMapper.selectByExample(title);
+
+        Assertions.assertEquals(title, selected.getTitle());
     }
 
 

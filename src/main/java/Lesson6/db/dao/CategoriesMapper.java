@@ -1,7 +1,7 @@
-package db.dao;
+package Lesson6.db.dao;
 
-import db.model.Categories;
-import db.model.CategoriesExample;
+import Lesson6.db.model.Categories;
+import Lesson6.db.model.CategoriesExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
